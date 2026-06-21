@@ -1,0 +1,337 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Carnival Jubilee — Family Cruise 2027</title>
+<style>
+  :root {
+    --navy: #0a1628;
+    --deep-blue: #0f1f3d;
+    --teal: #00a8b5;
+    --gold: #d4a853;
+    --warm-white: #f0ebe0;
+    --muted: #8899aa;
+    --card-bg: #132240;
+  }
+  * { margin:0; padding:0; box-sizing:border-box; }
+  body {
+    font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+    background: var(--navy);
+    color: var(--warm-white);
+    line-height: 1.6;
+    overflow-x: hidden;
+  }
+  .container { max-width: 900px; margin: 0 auto; padding: 0 24px; }
+
+  /* Hero */
+  .hero {
+    min-height: 100vh;
+    display: flex; flex-direction: column; justify-content: center;
+    align-items: center; text-align: center;
+    background: linear-gradient(180deg, var(--navy) 0%, #0d1f3c 40%, #132b4a 100%);
+    position: relative; overflow: hidden;
+  }
+  .hero::before {
+    content: ''; position: absolute; inset: 0;
+    background: radial-gradient(ellipse at 70% 20%, rgba(0,168,181,0.12) 0%, transparent 60%),
+                radial-gradient(ellipse at 30% 80%, rgba(212,168,83,0.06) 0%, transparent 50%);
+  }
+  .hero-content { position: relative; z-index: 1; }
+  .hero-tag {
+    font-size: 14px; text-transform: uppercase; letter-spacing: 4px;
+    color: var(--teal); margin-bottom: 20px;
+  }
+  .hero h1 {
+    font-size: clamp(40px, 8vw, 80px); font-weight: 800;
+    line-height: 1.1; margin-bottom: 12px;
+    background: linear-gradient(180deg, #fff 30%, var(--gold) 100%);
+    -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+  }
+  .hero .ship-name { font-size: 24px; color: var(--muted); margin-bottom: 8px; font-weight: 300; }
+  .hero .dates { font-size: 20px; color: var(--teal); font-weight: 500; margin-bottom: 40px; }
+  .hero-scroll { color: var(--muted); font-size: 13px; letter-spacing: 2px; animation: pulse 2s infinite; }
+  @keyframes pulse {
+    0%, 100% { opacity: 0.4; } 50% { opacity: 1; }
+  }
+
+  /* Timeline wave divider */
+  .wave { height: 60px; background: var(--deep-blue); position: relative; }
+  .wave::before {
+    content: ''; position: absolute; top: -30px; left: 0; right: 0; height: 60px;
+    background: var(--navy);
+    border-radius: 0 0 50% 50% / 0 0 100% 100%;
+  }
+
+  /* Sections */
+  section { padding: 80px 0; position: relative; }
+  section:nth-child(even) { background: var(--deep-blue); }
+  section h2 {
+    font-size: 36px; font-weight: 700; margin-bottom: 12px; color: #fff;
+  }
+  section .subtitle { color: var(--teal); font-size: 16px; margin-bottom: 40px; letter-spacing: 1px; }
+
+  /* Ship cards */
+  .ship-features { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 20px; }
+  .feature-card {
+    background: var(--card-bg); border-radius: 16px; padding: 32px 24px;
+    border: 1px solid rgba(255,255,255,0.06); transition: transform 0.3s, border-color 0.3s;
+  }
+  .feature-card:hover { transform: translateY(-4px); border-color: var(--teal); }
+  .feature-icon { font-size: 36px; margin-bottom: 16px; }
+  .feature-card h3 { font-size: 20px; margin-bottom: 8px; color: #fff; }
+  .feature-card p { color: var(--muted); font-size: 14px; }
+
+  /* Itinerary */
+  .timeline { position: relative; padding-left: 40px; }
+  .timeline::before { content: ''; position: absolute; left: 15px; top: 0; bottom: 0; width: 2px; background: linear-gradient(180deg, var(--teal), var(--gold), var(--teal)); }
+  .day { position: relative; margin-bottom: 48px; }
+  .day::before {
+    content: ''; position: absolute; left: -32px; top: 8px;
+    width: 14px; height: 14px; border-radius: 50%; background: var(--teal);
+    box-shadow: 0 0 12px rgba(0,168,181,0.4);
+  }
+  .day.port::before { background: var(--gold); box-shadow: 0 0 12px rgba(212,168,83,0.4); }
+  .day-header { display: flex; align-items: baseline; gap: 12px; flex-wrap: wrap; margin-bottom: 8px; }
+  .day-num { font-size: 14px; color: var(--teal); letter-spacing: 2px; text-transform: uppercase; }
+  .day-num.port-day { color: var(--gold); }
+  .day-title { font-size: 22px; font-weight: 700; color: #fff; }
+  .day-location { font-size: 15px; color: var(--muted); }
+  .day-detail { color: var(--muted); font-size: 15px; max-width: 600px; }
+
+  /* Cabins */
+  .cabin-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 20px; }
+  .cabin-card {
+    background: var(--card-bg); border-radius: 16px; padding: 28px;
+    border: 1px solid rgba(255,255,255,0.06); text-align: center;
+  }
+  .cabin-icon { font-size: 40px; margin-bottom: 12px; }
+  .cabin-card h3 { font-size: 18px; color: #fff; margin-bottom: 8px; }
+  .cabin-card .occupants { color: var(--muted); font-size: 14px; }
+  .cabin-card .cabin-type { color: var(--teal); font-size: 13px; font-weight: 600; margin-top: 8px; letter-spacing: 1px; }
+  .cabin-card.parents { border-color: rgba(212,168,83,0.3); }
+  .cabin-card.parents .cabin-type { color: var(--gold); }
+
+  /* Budget */
+  .budget-table { width: 100%; border-collapse: collapse; font-size: 15px; }
+  .budget-table td { padding: 14px 0; border-bottom: 1px solid rgba(255,255,255,0.06); }
+  .budget-table td:last-child { text-align: right; font-weight: 600; color: #fff; }
+  .budget-table tr:last-child td { border-bottom: none; font-size: 20px; color: var(--teal); font-weight: 700; }
+  .budget-table tr:last-child td:last-child { color: var(--gold); }
+
+  /* CTA */
+  .cta {
+    text-align: center; padding: 100px 0;
+    background: linear-gradient(180deg, var(--deep-blue) 0%, var(--navy) 100%);
+  }
+  .cta h2 { font-size: 40px; margin-bottom: 20px; }
+  .cta p { color: var(--muted); font-size: 18px; margin-bottom: 40px; max-width: 500px; margin-left: auto; margin-right: auto; }
+  .cta-button {
+    display: inline-block; padding: 18px 48px; font-size: 18px; font-weight: 700;
+    color: var(--navy); background: var(--gold); border: none; border-radius: 50px;
+    cursor: pointer; text-decoration: none; transition: transform 0.2s, box-shadow 0.2s;
+  }
+  .cta-button:hover { transform: scale(1.05); box-shadow: 0 8px 30px rgba(212,168,83,0.3); }
+
+  /* Footer */
+  footer { text-align: center; padding: 40px 0; color: var(--muted); font-size: 13px; }
+
+  /* Mobile */
+  @media (max-width: 600px) {
+    section { padding: 60px 0; }
+    section h2 { font-size: 28px; }
+    .hero h1 { font-size: 36px; }
+    .cabin-grid { grid-template-columns: 1fr; }
+  }
+</style>
+</head>
+<body>
+
+<section class="hero">
+  <div class="hero-content">
+    <div class="hero-tag">Family Expedition</div>
+    <div class="ship-name">Aboard the Carnival Jubilee</div>
+    <h1>Western<br>Caribbean</h1>
+    <div class="dates">January 17–23, 2027</div>
+    <p style="color:var(--muted); max-width:480px; margin:0 auto 40px; font-size:16px;">
+      Seven of us. Six days. One brand-new ship.<br>Jason · Jeffrey · Aden · Espy · Sunita · Grandma · Grandpa — together at sea.
+    </p>
+    <div class="hero-scroll">SCROLL TO EXPLORE ↓</div>
+  </div>
+</section>
+
+<div class="wave"></div>
+
+<section>
+  <div class="container">
+    <h2>The Ship</h2>
+    <p class="subtitle">Carnival's newest Excel-class flagship — built for everyone from 15 to 75.</p>
+    <div class="ship-features">
+      <div class="feature-card">
+        <div class="feature-icon">🎢</div>
+        <h3>BOLT Roller Coaster</h3>
+        <p>The first roller coaster at sea. 800 feet of track, 17 decks up, and you control the speed.</p>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon">🍗</div>
+        <h3>Shaq's Big Chicken</h3>
+        <p>Shaquille O'Neal's fried chicken joint — exclusive to the Jubilee. Sunita's already planning her daily visit. Worth the cruise alone.</p>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon">🌊</div>
+        <h3>WaterWorks</h3>
+        <p>Three massive waterslides, a splash zone, and a tipping bucket.</p>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon">🍸</div>
+        <h3>Serenity Deck</h3>
+        <p>Adults-only retreat with loungers, whirlpools, and a full bar. Grandma & Grandpa's happy place.</p>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon">🎭</div>
+        <h3>Grand Central Atrium</h3>
+        <p>Three decks high. Live shows, dance parties, and the heart of the ship every evening.</p>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon">🎰</div>
+        <h3>Casino + Comedy</h3>
+        <p>Late-night comedy club (18+ shows for Aden and Espy) and a full casino for the grown-ups.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="container">
+    <h2>The Itinerary</h2>
+    <p class="subtitle">Six days. Galveston → Caribbean → Galveston.</p>
+    <div class="timeline">
+      <div class="day">
+        <div class="day-header">
+          <span class="day-num">Day 1 · Sun</span>
+          <span class="day-title">Embarkation</span>
+        </div>
+        <div class="day-location">Galveston, TX</div>
+        <p class="day-detail">San Antonio → Galveston by 11:30am. Board at noon. Sail-away party at 3:30pm as Texas fades behind us. Dinner in the main dining room, welcome show in the Grand Central atrium.</p>
+      </div>
+      <div class="day">
+        <div class="day-header">
+          <span class="day-num">Day 2 · Mon (MLK Day)</span>
+          <span class="day-title">Sea Day</span>
+        </div>
+        <div class="day-location">Gulf of Mexico</div>
+        <p class="day-detail">Ride BOLT. Trivia. Pool. Sea Day Brunch. The ship is the destination today.</p>
+      </div>
+      <div class="day port">
+        <div class="day-header">
+          <span class="day-num port-day">Day 3 · Tue</span>
+          <span class="day-title">Cozumel, Mexico</span>
+        </div>
+        <div class="day-location">9am–5pm · Caribbean Sea</div>
+        <p class="day-detail">Snorkel Chankanaab Park ($25/pp) or lounge at Mr. Sancho's all-inclusive beach club ($60/pp). Crystal-clear water, sea lion show, reef snorkeling. Back on board by 4:30 — the ship waits for no one.</p>
+      </div>
+      <div class="day port">
+        <div class="day-header">
+          <span class="day-num port-day">Day 4 · Wed</span>
+          <span class="day-title">Isla Tropicale, Honduras</span>
+        </div>
+        <div class="day-location">9am–6pm · Honduras</div>
+        <p class="day-detail">🌴 Honduras — not Mexico. Carnival's private beach paradise. White sand, crystal water, beach chairs, snorkeling, kayaking, beach BBQ. No taxis, no ruins, no negotiating — just walk off the ship and onto the sand. Long, lazy beach day with a generous 6pm departure.</p>
+      </div>
+      <div class="day">
+        <div class="day-header">
+          <span class="day-num">Day 5 · Thu</span>
+          <span class="day-title">Sea Day</span>
+        </div>
+        <div class="day-location">Caribbean Sea</div>
+        <p class="day-detail">Sleep in. Bingo. Waterslides. One last BOLT ride. Elegant Night — the second formal evening. Theater show. Soak in every moment before the voyage winds down.</p>
+      </div>
+      <div class="day">
+        <div class="day-header">
+          <span class="day-num">Day 6 · Fri</span>
+          <span class="day-title">Sea Day + Pack</span>
+        </div>
+        <div class="day-location">Gulf of Mexico</div>
+        <p class="day-detail">Final sea day. Last Guy's Burger. Final round of mini-golf. Pack in the afternoon — luggage out by 10pm. One last dinner together. Debarkation talk.</p>
+      </div>
+      <div class="day">
+        <div class="day-header">
+          <span class="day-num">Day 7 · Sat</span>
+          <span class="day-title">Homeward</span>
+        </div>
+        <div class="day-location">Galveston → San Antonio</div>
+        <p class="day-detail">Ship docks at 7am. Breakfast on board. Debarkation by 10am. Back in San Antonio by 2pm — with 1,000 photos and a family that just had the trip of a lifetime.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="container">
+    <h2>Our Crew</h2>
+    <p class="subtitle">Seven of us. Three cabins. One ship.</p>
+    <div class="cabin-grid">
+      <div class="cabin-card">
+        <div class="cabin-icon">👨‍👦‍👦</div>
+        <h3>The Boys</h3>
+        <div class="occupants">Jason · Jeffrey · Aden</div>
+        <div class="cabin-type">Interior Triple</div>
+      </div>
+      <div class="cabin-card">
+        <div class="cabin-icon">👩‍👧‍👧</div>
+        <h3>The Girls</h3>
+        <div class="occupants">Espy · Sunita</div>
+        <div class="cabin-type">Interior Double</div>
+      </div>
+      <div class="cabin-card parents">
+        <div class="cabin-icon">🌅</div>
+        <h3>Grandma & Grandpa</h3>
+        <div class="occupants">The Parents</div>
+        <div class="cabin-type">Oceanview Upgrade ★</div>
+      </div>
+    </div>
+    <p style="text-align:center; color:var(--muted); margin-top:32px; font-size:14px;">
+      Three cabins near each other. Boys in one, girls in another. Grandma & Grandpa get the window. Everyone wins.
+    </p>
+  </div>
+</section>
+
+<section>
+  <div class="container">
+    <h2>The Budget</h2>
+    <p class="subtitle">Transparent numbers. Estimated total for all 7 people.</p>
+    <table class="budget-table">
+      <tr><td>Cruise fare (6 nights)</td><td>~$3,626</td></tr>
+      <tr><td>Taxes & port fees</td><td>~$910</td></tr>
+      <tr><td>Gratuities</td><td>~$672</td></tr>
+      <tr><td>Parking + gas</td><td>~$175</td></tr>
+      <tr><td>Excursions</td><td>$200–400</td></tr>
+      <tr><td>Drinks / WiFi / extras</td><td>Optional</td></tr>
+      <tr style="border-top: 2px solid rgba(212,168,83,0.3);"><td>Total (all 7 people)</td><td>~$5,600–6,400</td></tr>
+    </table>
+    <p style="text-align:center; color:var(--muted); margin-top:20px; font-size:14px;">
+      That's ~$800–915 per person for a 6-day cruise. Less than a nice hotel room for a week — and the hotel doesn't come with a roller coaster.
+    </p>
+  </div>
+</section>
+
+<div class="cta">
+  <div class="container">
+    <h2>Are You In?</h2>
+    <p>The Carnival Jubilee sails January 17, 2027. Seven spots. Three cabins. One family. This only works if everyone says yes.</p>
+    <a href="#" class="cta-button">I'M IN 🛳️</a>
+    <p style="color:var(--muted); font-size:13px; margin-top:24px;">
+      We need to book by late June to lock in the cabins and the rate.<br>
+      Questions? Call Jason. He's got the full research packet.
+    </p>
+  </div>
+</div>
+
+<footer>
+  <div class="container">
+    <p>Sample plan generated by Hermes · <a href="#" style="color:var(--teal); text-decoration:none;">Full research in Obsidian</a></p>
+  </div>
+</footer>
+
+</body>
+</html>
